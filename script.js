@@ -18,8 +18,8 @@
 //from HTML
 const gridXHTML = parseInt(document.getElementById("gridX"),10);
 const gridYHTML = parseInt(document.getElementById("gridY"),10);
-const startXHTML = parseInt(document.getElementById("startX"),10);
-const startYHTML = parseInt(document.getElementById("startY"),10);
+//const startXHTML = parseInt(document.getElementById("startX"),10);
+//const startYHTML = parseInt(document.getElementById("startY"),10);
 const goalXHTML = parseInt(document.getElementById("goalX"),10);
 const goalYHTML = parseInt(document.getElementById("goalY"),10);
 const table = document.getElementById("table");
@@ -40,6 +40,7 @@ class Node {
     changeColor() {
         if(this.wall == true) {
             //change color to black
+            this.element.style.color = "black"
         }
         if(this.visted == true) {
             //change color to yellow
@@ -50,20 +51,19 @@ class Node {
     }
 }
 
-class Algorithm {
-    constructor(walk) {
-        this.start = cells[startXHTML,startYHTML];
-        this.goal = cells[goalXHTML,goalYHTML];
-        this.walk = walk;
-    }
-}
+//class Algorithm {
+    //constructor(walk) {
+        //this.start = cells[startXHTML][startYHTML];
+        //this.goal = cells[goalXHTML][goalYHTML];
+        //this.walk = walk;
+    //}
+//}
 
 
-BFS = new Algorithm(BFSFunc())
+//BFS = new Algorithm(BFSFunc())
 
-function BFSFunc(s,g) {
-
-}
+//function BFSFunc(s,g) {
+//}
 
 function makeGrid(gridX,gridY) {
     console.log(1)
@@ -81,5 +81,6 @@ function makeGrid(gridX,gridY) {
         }
 }
 
-console.log(4)
-makeGrid(gridXHTML,gridXHTML);
+console.log(gridXHTML)
+console.log(gridYHTML)
+makeGrid(gridXHTML,gridYHTML);

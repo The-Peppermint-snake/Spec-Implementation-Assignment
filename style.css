@@ -5,3 +5,8 @@ td {
     border-spacing: 0px;
     padding: 40px;
 }
+
+table {
+    border-collapse: collapse;
+}
+
