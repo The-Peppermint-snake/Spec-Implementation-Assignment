@@ -47,11 +47,11 @@ goalYHTML.addEventListener("change", function() {
 })
 
 class Node {
-    constructor(x,y,element,neighbors) {
+    constructor(x,y,element) {
         this.x = x;
         this.y = y;
         this.element = element;
-        this.neighbors = neighbors;
+        this.neighbors = this.getNeighbors();
         this.wall = false;
         this.visted = false;
         this.pathTaken = false;
@@ -72,6 +72,7 @@ class Node {
     getNeighbors() {
         //get neighbors of the object
         // -1 and +1 from x and y
+        //return array of neighboring objects
     }
 }
 
@@ -97,7 +98,6 @@ class Algorithm {
         this.start = cells[startXHTML.value-1][startYHTML.value-1].element;
         this.goal = cells[goalXHTML.value-1][goalYHTML.value-1].element;
         this.walk = walk;
-
     }
 }
 
