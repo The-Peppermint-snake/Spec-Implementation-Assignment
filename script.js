@@ -8,7 +8,7 @@
         //pathtaken -> orange
         //goal -> red
         //start ->green
-    //get neighbors method
+    //get neighbors method (Maybe?????)
     //BFS function
 
 const gridXHTML = document.getElementById("gridX");
@@ -20,30 +20,29 @@ const goalYHTML = document.getElementById("goalX");
 const table = document.getElementById("table");
 
 gridXHTML.addEventListener("change", function() {
-    let gridepls = makeGrid(gridXHTML.value,gridYHTML.value,table);
+    let gridpls = makeGrid(gridXHTML.value,gridYHTML.value,table);
 
 })
 gridYHTML.addEventListener("change", function() {
-    let gridepls = makeGrid(gridXHTML.value,gridYHTML.value,table);
+    let gridpls = makeGrid(gridXHTML.value,gridYHTML.value,table);
 
 })
 startXHTML.addEventListener("change", function() {
     console.log("start x")
-    let gridepls = makeGrid(gridXHTML.value,gridYHTML.value,table);
-    BFS = new Algorithm(BFSFunc(), gridepls)
-
+    let gridpls = makeGrid(gridXHTML.value,gridYHTML.value,table);
+    BFS = new Algorithm(BFSFunc, gridpls)
 })
 startYHTML.addEventListener("change", function() {
-    let gridepls = makeGrid(gridXHTML.value,gridYHTML.value,table);
-    BFS = new Algorithm(BFSFunc(), gridepls)
+    let gridpls = makeGrid(gridXHTML.value,gridYHTML.value,table);
+    BFS = new Algorithm(BFSFunc, gridpls)
 })
 goalXHTML.addEventListener("change", function() {
-    let gridepls = makeGrid(gridXHTML.value,gridYHTML.value,table);
-    BFS = new Algorithm(BFSFunc(), gridepls)
+    let gridpls = makeGrid(gridXHTML.value,gridYHTML.value,table);
+    BFS = new Algorithm(BFSFunc, gridpls)
 })
 goalYHTML.addEventListener("change", function() {
-    let gridepls = makeGrid(gridXHTML.value,gridYHTML.value,table);
-    BFS = new Algorithm(BFSFunc(), gridepls)
+    let gridpls = makeGrid(gridXHTML.value,gridYHTML.value,table);
+BFS = new Algorithm(BFSFunc, gridpls)
 })
 
 class Node {
@@ -51,8 +50,8 @@ class Node {
         this.x = x;
         this.y = y;
         this.element = element;
-        this.neighbors = this.getNeighbors();
-        this.wall = false;
+        this.neighbors = [];
+        this.wall = true;
         this.visted = false;
         this.pathTaken = false;
     }
@@ -69,10 +68,21 @@ class Node {
         }
     }
 
-    getNeighbors() {
-        //get neighbors of the object
-        // -1 and +1 from x and y
-        //return array of neighboring objects
+    getNeighbors(oX,oY,cells) {
+        let nArray = []
+        if (cells[oX][oY+1] !== undefined) {
+            nArray.push(cells[oX][oY+1])
+        } 
+        if (cells[oX+1][oY] !== undefined) {
+            nArray.push(cells[oX+1][oY])
+        } 
+        if (cells[oX][oY-1] !== undefined) {
+            nArray.push(cells[oX][oY-1])
+        } 
+        if (cells[oX-1][oY] !== undefined) {
+            nArray.push(cells[oX-1][oY])
+        } 
+        return nArray;
     }
 }
 
@@ -91,19 +101,30 @@ function makeGrid(gridX,gridY,table) {
     }
     return cells;
 }
-let gridepls = makeGrid(gridXHTML.value,gridYHTML.value,table);
+let gridpls = makeGrid(gridXHTML.value,gridYHTML.value,table);
 
 class Algorithm {
     constructor(walk, cells) {
-        this.start = cells[startXHTML.value-1][startYHTML.value-1].element;
-        this.goal = cells[goalXHTML.value-1][goalYHTML.value-1].element;
-        this.walk = walk;
+        try {
+            this.start = cells[startXHTML.value-1][startYHTML.value-1].element;
+            this.goal = cells[goalXHTML.value-1][goalYHTML.value-1].element;
+            this.walk = walk;
+            console.log("Hello new alogitign")
+        }
+        catch {
+            window.alert("Select a number within the dimensions of the grid")
+        }
+    
     }
 }
 
 
-BFS = new Algorithm(BFSFunc(), gridepls)
+BFS = new Algorithm(BFSFunc, gridpls)
 
-function BFSFunc(s,g) {
-
+function BFSFunc(cells) {
+    let s = this.start;
+    let g = this.goal;
+    console.log(s,g)
 }
+
+BFS.walk(gridpls)
