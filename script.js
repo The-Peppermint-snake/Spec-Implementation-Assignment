@@ -58,7 +58,7 @@ class Node {
     changeColor() {
         if(this.wall == true) {
             //change color to black
-            this.element.style.color = "black"
+            this.element.style.backgroudColor = "black";
         }
         if(this.visted == true) {
             //change color to yellow
@@ -69,18 +69,18 @@ class Node {
     }
 
     getNeighbors(oX,oY,cells) {
-        let nArray = []
+        let nArray = [];
         if (cells[oX][oY+1] !== undefined) {
-            nArray.push(cells[oX][oY+1])
+            nArray.push(cells[oX][oY+1]);
         } 
         if (cells[oX+1][oY] !== undefined) {
-            nArray.push(cells[oX+1][oY])
+            nArray.push(cells[oX+1][oY]);
         } 
         if (cells[oX][oY-1] !== undefined) {
-            nArray.push(cells[oX][oY-1])
+            nArray.push(cells[oX][oY-1]);
         } 
         if (cells[oX-1][oY] !== undefined) {
-            nArray.push(cells[oX-1][oY])
+            nArray.push(cells[oX-1][oY]);
         } 
         return nArray;
     }
@@ -95,6 +95,7 @@ function makeGrid(gridX,gridY,table) {
         for(let x = 0; x < gridX; x++) {
             let node = new Node(x,y);
             node.element = tableRow.insertCell();
+            node.changeColor()
             rows.push(node);
         }
         cells.push(rows);
@@ -112,14 +113,13 @@ class Algorithm {
             console.log("Hello new alogitign")
         }
         catch {
-            window.alert("Select a number within the dimensions of the grid")
+            window.alert("Select a number within the dimensions of the grid");
         }
-    
     }
 }
 
 
-BFS = new Algorithm(BFSFunc, gridpls)
+BFS = new Algorithm(BFSFunc, gridpls);
 
 function BFSFunc(cells) {
     let s = this.start;
@@ -127,4 +127,4 @@ function BFSFunc(cells) {
     console.log(s,g)
 }
 
-BFS.walk(gridpls)
+BFS.walk(gridpls);
