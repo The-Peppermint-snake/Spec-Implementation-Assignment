@@ -47,17 +47,17 @@ class Node {
         this.wall = false;
         this.visted = false;
         this.pathTaken = false;
+        this.parent;
     }
     changeColor() {
         if(this.wall == true) {
             //change color to black
             this.element.style.backgroundColor = "black";
-        }
+        }else if(this.pathTaken == true) {
+            this.element.style.backgroundColor = "orange"}
         else if(this.visted == true) {
             this.element.style.backgroundColor = "yellow"
-        }
-        else if(this.pathTaken == true) {
-            this.element.style.backgroundColor = "orange"
+    
         }
         else if(this.wall == false) {
             this.element.style.backgroundColor = "white"
@@ -74,17 +74,17 @@ class Node {
 
     getNeighbors(cells) {
         let nArray = [];
-        if (this.y+1 <= gridYHTML.value) {
-            nArray.push(cells[this.x][this.y+1]);
+        if (this.y+1 < gridYHTML.value) {
+            nArray.push(cells[this.y+1][this.x]);
         } 
-        if (this.x+1 <= gridXHTML.value) {
-            nArray.push(cells[this.x+1][this.y]);
+        if (this.x+1 < gridXHTML.value) {
+            nArray.push(cells[this.y][this.x+1]);
         } 
         if (this.y-1 >= 0) {
-            nArray.push(cells[this.x][this.y-1]);
+            nArray.push(cells[this.y-1][this.x]);
         } 
         if (this.x-1 >= 0) {
-            nArray.push(cells[this.x-1][this.y]);
+            nArray.push(cells[this.y][this.x-1]);
         } 
         this.neighbors = nArray;
     }
@@ -102,6 +102,7 @@ function makeGrid(gridX,gridY,table) {
             node.element.addEventListener("click", function() {
                 node.wall = !node.wall
                 node.changeColor();
+                BFS = new Algorithm(BFSFunc, gridpls)
             })
             node.changeColor()
             rows.push(node);
@@ -127,7 +128,7 @@ class Algorithm {
 }
 
 
-BFS = new Algorithm(BFSFunc, gridpls);
+let BFS = new Algorithm(BFSFunc, gridpls);
 
 function BFSFunc(cells) {
     let s = this.start;
@@ -136,12 +137,36 @@ function BFSFunc(cells) {
     toVisitArray = []
     s.element.style.backgroundColor = "green"
     g.element.style.backgroundColor = "red"
-
     s.visted = true
     vistedArray.push(s)
-    s.getNeighbors(gridpls)
+    s.getNeighbors(cells)
     for (let i = 0; i < s.neighbors.length; i++) {
-        toVisitArray.push(s.neighbors[i])
+        if (s.neighbors[i].wall === false) {
+            toVisitArray.push(s.neighbors[i])
+        }
     }
-    console.log(toVisitArray)
+    let current = toVisitArray.shift()
+    while (toVisitArray.length > 0) {
+        if (current === g) {
+            while (current.parent) {
+                current.pathTaken = true;
+                current.changeColor();
+                current = current.parent;
+                console.log(current)
+            }
+            break;
+        }
+        current.visted = true;
+        current.changeColor()
+        vistedArray.push(current)
+        current.getNeighbors(cells)
+        for (let x = 0; x < current.neighbors.length; x++)
+            if (current.neighbors[x].visted !== true) {
+                current.neighbors[x].parent = current;
+                toVisitArray.push(current.neighbors[x])
+            }  
+        current = toVisitArray.shift()
+    }
+    g.element.style.backgroundColor = "red"
+
 }
