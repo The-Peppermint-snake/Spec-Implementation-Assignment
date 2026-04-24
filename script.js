@@ -149,9 +149,9 @@ function BFSFunc(cells) {
     while (toVisitArray.length > 0) {
         if (current === g) {
             while (current.parent) {
+                current = current.parent;
                 current.pathTaken = true;
                 current.changeColor();
-                current = current.parent;
                 console.log(current)
             }
             break;
